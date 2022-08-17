@@ -8,6 +8,7 @@
 <script>
 import gddt from './components/gddt'
 
+
 export default {
   name: 'App',
   components: {
