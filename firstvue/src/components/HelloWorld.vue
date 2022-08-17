@@ -217,4 +217,12 @@ export default {
 .amap-page-container {
   position: relative;
 }
+.el-main {
+  position: absolute;
+  left: 0;
+  right: 500px;
+  top: 40px;
+  bottom: 0;
+  // overflow-y: scroll;
+  }
 </style>
