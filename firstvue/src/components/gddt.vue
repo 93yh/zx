@@ -2,57 +2,43 @@
 <template>
   <div>
     <el-aside width="500px">
-      <div id="main" style="width: 500px;height: 500px;"></div>
+      <div id="main" style="width: 500px; height: 500px"></div>
       <!-- Table -->
-      <el-button type="text" @click="dialogTableVisible = true">打开表格</el-button>
+      <el-button type="text" @click="dialogTableVisible = true"
+        >打开表格</el-button
+      >
+      <!-- 
+      原因：
+      el-table给每一个el-table-column设置宽度之后就会有这个问题
+      解决方法：
+      删除其中一个el-table-column的宽度就好了 -->
       <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-        <el-table
-          :data="tableData"
-          style="width: 100%"
-          height="250">
-          <el-table-column
-            fixed
-            prop="date"
-            label="日期"
-            width="150">
+        <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" border fit style="width: 100%">
+          <el-table-column fixed prop="date" label="日期" width="150">
           </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-            width="120">
+          <el-table-column prop="name" label="姓名" width="120">
           </el-table-column>
-          <el-table-column
-            prop="province"
-            label="省份"
-            width="120">
+          <el-table-column prop="province" label="省份" width="120">
           </el-table-column>
-          <el-table-column
-            prop="city"
-            label="市区"
-            width="120">
+          <el-table-column prop="city" label="市区" width="120">
           </el-table-column>
-          <el-table-column
-            prop="address"
-            label="地址"
-            width="300">
+          <el-table-column prop="address" label="地址" width="300">
           </el-table-column>
-          <el-table-column
-            prop="zip"
-            label="邮编"
-            width="120">
+          <el-table-column prop="zip" label="邮编" > 
           </el-table-column>
         </el-table>
-        
+
         <div class="block">
           <!-- <span class="demonstration">完整功能</span> -->
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="currentPage4"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
+            :current-page="currentPage"
+            :page-sizes="[4, 8, 12, 16]"
+            :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400">
+            :total="tableData.length"
+          >
           </el-pagination>
         </div>
       </el-dialog>
@@ -92,7 +78,6 @@
               :position="marker.position"
             />
           </el-amap>
- 
         </div>
       </el-card>
     </el-main>
@@ -101,65 +86,139 @@
 
 <script>
 import { AMapManager } from "vue-amap";
-import * as echarts from 'echarts'
+import * as echarts from "echarts";
 let amapManager = new AMapManager();
 export default {
-
   data() {
     const self = this;
     return {
-      currentPage4: 4,
-      tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        }],
-        dialogTableVisible: false,
+      // currentPage1: 1,
+      currentPage: 1, //初始页
+      pageSize: 4, //    每页的数据
+      tableData: [
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-05",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-06",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-07",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-08",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-09",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-10",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-11",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-12",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-13",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-14",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+        {
+          date: "2016-05-15",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333,
+        },
+      ],
+      dialogTableVisible: false,
+      
       address: null,
       searchKey: "上海",
       amapManager,
@@ -195,32 +254,32 @@ export default {
         moveend: () => {},
         zoomchange: () => {},
         click: (e) => {
-          let { lng, lat } = e.lnglat
-          self.lng = lng
-          self.lat = lat
- 
+          let { lng, lat } = e.lnglat;
+          self.lng = lng;
+          self.lat = lat;
+
           // 这里通过高德 SDK 完成。
           var geocoder = new AMap.Geocoder({
             radius: 1000,
-            extensions: 'all'
-          })
+            extensions: "all",
+          });
           geocoder.getAddress([lng, lat], function (status, result) {
-            if (status === 'complete' && result.info === 'OK') {
+            if (status === "complete" && result.info === "OK") {
               if (result && result.regeocode) {
                 console.log(result);
-                self.address = result.regeocode.formattedAddress
+                self.address = result.regeocode.formattedAddress;
                 self.markers = [];
-                  const obj = {
-                    position: [lng, lat],
-                    text: result.regeocode.formattedAddress,
-                    offset: [0, 30],
-                  };
-                  self.markers.push(obj);
-                  // self.sure();
-                self.$nextTick()
+                const obj = {
+                  position: [lng, lat],
+                  text: result.regeocode.formattedAddress,
+                  offset: [0, 30],
+                };
+                self.markers.push(obj);
+                // self.sure();
+                self.$nextTick();
               }
             }
-          })
+          });
         },
       },
       // 一些工具插件
@@ -247,8 +306,8 @@ export default {
                     self.marker.setMap(o);
                   }
                   self.marker.setPosition(self.center);
-                }else{
-                  self.$message.error("位置信息，获取失败！")
+                } else {
+                  self.$message.error("位置信息，获取失败！");
                 }
               });
             },
@@ -260,7 +319,7 @@ export default {
           // locate:true, // 定位
           // direction:true, // 方向键盘是否可见
           liteStyle: true, // 精简模式
- 
+
           // position:"RB", // 位置，默认为LT 代表 左上方
         },
         "Scale", // 比例尺
@@ -278,42 +337,42 @@ export default {
     };
   },
   mounted() {
-    this.aa()
+    this.aa();
   },
-  created(){
+  created() {
     // this.searchByHand()
   },
   methods: {
-      
     handleSizeChange(val) {
+      this.pageSize=val;
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.currentPage=val;
       console.log(`当前页: ${val}`);
     },
 
-    aa(){
-          // 基于准备好的dom，初始化echarts实例
-          var myChart = echarts.init(document.getElementById('main'));
-          // 绘制图表
-          myChart.setOption({
-            title: {
-              text: 'ECharts 入门示例'
-            },
-            tooltip: {},
-            xAxis: {
-              data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-            },
-            yAxis: {},
-            series: [
-              {
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-              }
-            ]
-          });
-      
+    aa() {
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById("main"));
+      // 绘制图表
+      myChart.setOption({
+        title: {
+          text: "ECharts 入门示例",
+        },
+        tooltip: {},
+        xAxis: {
+          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+        },
+        yAxis: {},
+        series: [
+          {
+            name: "销量",
+            type: "bar",
+            data: [5, 20, 36, 10, 10, 20],
+          },
+        ],
+      });
     },
     onSearchResult(pois) {
       if (pois.length > 0) {
@@ -323,12 +382,12 @@ export default {
         this.markers = [];
         const obj = {
           position: [lng, lat],
-          text: address+name,
+          text: address + name,
           offset: [0, 30],
         };
         this.markers.push(obj);
         this.address = address + name;
-        
+
         let center = [lng, lat];
         this.lng = lng;
         this.lat = lat;
@@ -352,7 +411,7 @@ export default {
 .amap-demo {
   height: calc(100vh - 165px);
 }
- 
+
 .search-box {
   position: absolute;
   top: 25px;
@@ -367,7 +426,7 @@ export default {
   right: 0;
   top: 40px;
   bottom: 0;
-  }
+}
 .el-main {
   position: absolute;
   left: 0;
