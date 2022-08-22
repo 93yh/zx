@@ -13,7 +13,7 @@
       解决方法：
       删除其中一个el-table-column的宽度就好了 -->
       <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-        <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" border fit style="width: 100%">
+        <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" border fit style="width: 100%" height="200">
           <el-table-column fixed prop="date" label="日期" width="150">
           </el-table-column>
           <el-table-column prop="name" label="姓名" width="120">
@@ -344,11 +344,15 @@ export default {
   },
   methods: {
     handleSizeChange(val) {
+      console.log(this);
       this.pageSize=val;
       console.log(`每页 ${val} 条`);
+      console.log(this);
     },
     handleCurrentChange(val) {
+      console.log(this);
       this.currentPage=val;
+      console.log(this);
       console.log(`当前页: ${val}`);
     },
 
