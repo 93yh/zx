@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04-vue的el和data的两种写法</title>
+    </head>
+
+    <body>
+    <!-- 被 vm 实例所控制的区域 -->
+    <div id="app"></div>
+
+    <script>
+        // 创建 vm 实例对象
+        const vm = new Vue({
+        //指定控制的区域
+        // el:'#app',   // el 常规写法
+        // data:{},     // data 常规写法 ———— 这种也叫对象式写法
+
+        // data 函数式写法，这种写法后续经常见
+        data () {   // 这里使用data：function(){}也可以，但是：绝对不能写成data:()=>{}
+                    // 因为这种写法变质了，成为Window对象了，这样后续用this指向时，这个this所指代的就不Vue实例了
+            return {
+
+            }
+        }
+        });
+
+        // el 另外的写法
+        vm.this.$mount('#app')     // 此种写法需要记住，后续组件化开发还会见到
+    </script>
+    </body>
+</html>
+
+

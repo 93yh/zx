@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>05-了解object.defineProperty()</title>
+    <script src="../js/vue.js"></script>
+    </head>
+
+    <body>
+    <script>
+
+        Vue.config.productionTip=false;
+
+        let sex = '女'
+        let person = {
+        name: '紫邪情'
+        }
+
+        //  参数说明：person 为要修改的对象  sex为具体修改的对象中的哪个属性  {} 对修改属性的配置
+        Object.defineProperty( person , 'sex' , {
+        //  以下就是{}中的相关配置
+        //  value: '男',
+        //  enumerable: true,    // 这个sex是否可以被遍历
+        //  writable: true,      // 这个sex是否可以被修改
+        //  configurable: true,   // 这个sex是否可以被删除
+
+            // 当有人获取sex这个属性时会触发这个get()方法
+            get(){
+            console.log('有人读取sex属性了');
+            return sex;
+            },
+
+            // 当有人修改sex属性的值时会触发这个set方法
+            set(value){
+            console.log('有人修改了sex的值');
+            return sex = value;
+            }
+
+        });
+
+    </script>
+    </body>
+</html>
+
