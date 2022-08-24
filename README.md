@@ -1,6 +1,9 @@
 前端项目技术点
 1.	高德地图 https://lbs.amap.com/product/map#/ （熟悉）
         https://elemefe.github.io/vue-amap/#/zh-cn/introduction/install
+        https://gitee.com/guyangyang/vue-amap/tree/vue2 (基于Vue 2.0和高德地图2.0的地图组件)
+        https://docs.guyixi.cn/vue-bmap-gl/#/  (vue-bmap-gl | 基于 Vue 2.x 与百度地图GL的地图组件)
+        https://vue-amap.guyixi.cn/  (高德地图2.0版本的vue3对应封装)
 2.	Vue  https://v2.cn.vuejs.org/v2/guide/instance.html（熟悉）
 3.	Vue cli https://cli.vuejs.org/zh/ （了解）
 4.	Nginx https://zhuanlan.zhihu.com/p/34943332（了解）
@@ -40,4 +43,5 @@ Git提交流程
 6.	将代码提交至github
 7.      高德放大到上海建科
 8.      表格显示行列 和上下滑动 分页
-9.
+9.      气泡
+10.     3D
