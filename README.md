@@ -13,6 +13,7 @@
 8.	Axios http://axios-js.com/zh-cn/docs/index.html（了解）
 9.	Html css ,js基础，网易云课堂/慕课网
 10.	Lodash https://www.lodashjs.com/docs/lodash.chunk (工具)
+11.     Swiper https://www.swiper.com.cn/demo/index.html(工具)
 
 项目开发流程
 需求分析-》总体设计-》详细设计-》编码->测试部署
