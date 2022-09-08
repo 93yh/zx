@@ -2,5 +2,5 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 git push
 
-vue list
-vue init webpack firstvue
+npm install -g @vue/cli
+vue create hello-world
